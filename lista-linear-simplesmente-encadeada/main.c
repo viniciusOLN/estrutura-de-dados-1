@@ -39,12 +39,14 @@ void inserirUltimo(Lista *lista, ItemDaLista a){
 
     if(novo->velocidade > lista->velocidade_max){
         int aux = (novo->velocidade - lista->velocidade_max);
-        for(int i = 0; i < aux; i++){
-         novo->valor_multa = novo->valor_multa + 5;
-          if(novo->valor_multa > 190){
-             novo->valor_multa = novo->valor_multa - 5;
-             break;
-          }
+        novo->valor_multa = 0;
+        int i = 0;
+        while( i != aux ){
+            novo->valor_multa = novo->valor_multa + 5;
+            if(novo->valor_multa >=190){
+                break;
+            }
+            i++;
         }
     }
 
