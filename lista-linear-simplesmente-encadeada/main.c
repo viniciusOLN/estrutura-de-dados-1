@@ -1,98 +1,173 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define v_max 40
+#define velMAX 40
 
-typedef struct {
-    char *placa;
+typedef struct ItemDaLista{
+    int placa;
     int velocidade;
     int dia;
     int mes;
     int ano;
-    int valor_multa;
-    struct ItemDaLista *proximoItem;
+	int valor_multa;
+    struct ItemDaLista *proxItem;
 }ItemDaLista;
 
-typedef struct {
-  int quantItens;
-  int velocidade_max;
-  ItemDaLista *primeiroDaLista;
-  ItemDaLista*ultimoDaLista;
-} Lista;
+typedef struct Lista{
+    int quantItens;
+    ItemDaLista *primeiroElemento;
+}Lista;
 
-void initLista(Lista *lista, int velocidade){
+void initLista(Lista *lista){
     lista->quantItens = 0;
-    lista->primeiroDaLista = NULL;
-    lista->velocidade_max = velocidade;
-    lista->ultimoDaLista = NULL;
+    lista->primeiroElemento = NULL;
 }
 
-void inserirUltimo(Lista *lista, ItemDaLista a){
-    ItemDaLista *novo;;
-    novo = malloc(sizeof(ItemDaLista));
-
-    novo->placa = a.placa;
-    novo->velocidade = a.velocidade;
-
-    novo->dia = a.dia;
-    novo->mes = a.mes;
-    novo->ano = a.ano;
-
-    if(novo->velocidade > lista->velocidade_max){
-        int aux = (novo->velocidade - lista->velocidade_max);
-        novo->valor_multa = 0;
-        int i = 0;
-        while( i != aux ){
-            novo->valor_multa = novo->valor_multa + 5;
-            if(novo->valor_multa >=190){
-                break;
-            }
-            i++;
-        }
+void inserirPrimeiro(Lista *lista, ItemDaLista valor){
+    ItemDaLista *aux = malloc(sizeof(ItemDaLista));
+    aux->velocidade = valor.velocidade;
+    aux->placa = valor.placa;
+    aux->dia = valor.dia;
+    aux->mes = valor.mes;
+    aux->ano = valor.ano;
+    aux->valor_multa = 0;
+    if(aux->velocidade > velMAX){
+     int temp = (aux->velocidade - velMAX) * 5;
+        if(temp >= 190)
+          aux->valor_multa = 190;
+        else
+          aux->valor_multa = temp;
     }
 
-    novo->proximoItem = NULL;
+    aux->proxItem = NULL;
     if(lista->quantItens == 0){
-        lista->primeiroDaLista = novo;
-        lista->ultimoDaLista = novo;
+        lista->primeiroElemento = aux;
     }else{
-        lista->ultimoDaLista->proximoItem = novo;
-        lista->ultimoDaLista = novo;
+        aux->proxItem = lista->primeiroElemento;
+        lista->primeiroElemento = aux;
     }
     lista->quantItens++;
 }
 
-ItemDaLista ler_valor(){
-    char motorista[20];
-    ItemDaLista r;
+void inserirMeio(Lista *lista, ItemDaLista valor, int pos){
 
-    printf("digite a placa: ");
-    scanf("%s", r.placa);
-    printf("digite a velocidade: ");
-    scanf("%i", &r.velocidade);
-    printf("digite a data(dd/mm/aa): ");
-    scanf("%i %i %i",&r.dia, &r.mes, &r.ano );;
+}
 
-    return r;
+void removerPrimeiro(Lista *lista){
+   ItemDaLista *aux = lista->primeiroElemento->proxItem;
+   lista->primeiroElemento = aux;
+   lista->quantItens--;
+}
+
+void removerUltimo(Lista *lista){
+  ItemDaLista *ultimo = lista->primeiroElemento;
+  ItemDaLista *penultimo = lista;
+
+  while(ultimo->proxItem != NULL){
+	  penultimo = ultimo;
+	  ultimo = ultimo->proxItem;
+  }
+  penultimo->proxItem = NULL;
+  lista->quantItens--;
+}
+
+void inserirUltimo(Lista *lista, ItemDaLista valor){
+    ItemDaLista *aux = malloc(sizeof(ItemDaLista));
+    aux->velocidade = valor.velocidade;
+    aux->placa = valor.placa;
+    aux->dia = valor.dia;
+    aux->mes = valor.mes;
+    aux->ano = valor.ano;
+    aux->valor_multa = 0;
+    if(aux->velocidade > velMAX){
+     int temp = (aux->velocidade - velMAX) * 5;
+        if(temp >= 190)
+          aux->valor_multa = 190;
+        else
+          aux->valor_multa = temp;
+
+    }
+
+    aux->proxItem = NULL;
+    if(lista->quantItens == 0){
+        lista->primeiroElemento = aux;
+    }else{
+        ItemDaLista *temp = lista->primeiroElemento;
+        while(1){
+            if(temp->proxItem == NULL){
+                temp->proxItem = aux;
+                break;
+            }
+            temp = temp->proxItem;
+        }
+     }
+     lista->quantItens++;
 }
 
 void mostrarLista(Lista *lista){
- ItemDaLista *i = lista->primeiroDaLista;
-  while(i != NULL){
-    printf("placa: %s velocidade: %i data: %i/%i/%i valor multa: %i \n",  i->placa, i->velocidade, i->dia, i->mes, i->ano, i->valor_multa);
-    i = i->proximoItem;
+ItemDaLista *temp = lista->primeiroElemento;
+  while(temp != NULL){
+    printf("placa: %d velocidade: %d data: %d/%d/%d valor da multa: %d\n0", temp->placa, temp->velocidade, temp->dia, temp->mes, temp->ano, temp->valor_multa);
+    temp = temp->proxItem;
   }
 }
 
 int main(){
     Lista *lista;
-    //printf("velocidade maxima permitida: %i\n", v_max);
-
-    ItemDaLista a;
-
-    initLista(&lista, v_max);
-    ItemDaLista b = ler_valor();
-    inserirUltimo(&lista, b);
-    mostrarLista(&lista);
-
- return 0;
+    int op = 0;
+    int exit = 0;
+    initLista(&lista);
+    do{
+        puts("1. inserir no primeiro   2. inserir no ultimo");
+        puts("3. mostrar lista   4. sair 5. remover primeiro");
+        printf("digite uma opcao: ");
+        scanf("%i", &op);
+    	switch(op){
+			case 1:{
+	  		  ItemDaLista a;
+	          printf("digite a placa: ");
+	          scanf("%i", &a.placa);
+	          printf("digite a velocidade: ");
+	          scanf("%i", &a.velocidade);
+	          printf("digite o dia: ");
+	          scanf("%i", &a.dia);
+	          printf("digite o mes: ");
+	          scanf("%i", &a.mes);
+	          printf("digite o ano: ");
+	          scanf("%i", &a.ano);
+	   	  	  inserirPrimeiro(&lista, a);
+	   	  	  break;
+	  		}
+	   	    case 2:{
+	  	 	  ItemDaLista a;
+	          printf("digite a placa: ");
+	          scanf("%i", &a.placa);
+	          printf("digite a velocidade: ");
+	          scanf("%i", &a.velocidade);
+	          printf("digite o dia: ");
+	          scanf("%i", &a.dia);
+	          printf("digite o mes: ");
+	          scanf("%i", &a.mes);
+	          printf("digite o ano: ");
+	          scanf("%i", &a.ano);
+	          inserirUltimo(&lista, a);
+	          break;
+		    }
+	        case 3:{
+	        	mostrarLista(&lista);
+	        	break;
+	        }
+	        case 4:{
+	        	exit = 0;
+	        	break;
+	        }
+	        case 5:{
+				removerPrimeiro(&lista);
+				break;
+			}
+	        default:{
+	        	exit = 0;
+	  	    }
+		}
+    }while(exit != 0);
+    return 0;
 }
