@@ -48,28 +48,6 @@ void inserirPrimeiro(Lista *lista, ItemDaLista valor){
     lista->quantItens++;
 }
 
-void inserirMeio(Lista *lista, ItemDaLista valor, int pos){
-
-}
-
-void removerPrimeiro(Lista *lista){
-   ItemDaLista *aux = lista->primeiroElemento->proxItem;
-   lista->primeiroElemento = aux;
-   lista->quantItens--;
-}
-
-void removerUltimo(Lista *lista){
-  ItemDaLista *ultimo = lista->primeiroElemento;
-  ItemDaLista *penultimo = lista;
-
-  while(ultimo->proxItem != NULL){
-	  penultimo = ultimo;
-	  ultimo = ultimo->proxItem;
-  }
-  penultimo->proxItem = NULL;
-  lista->quantItens--;
-}
-
 void inserirUltimo(Lista *lista, ItemDaLista valor){
     ItemDaLista *aux = malloc(sizeof(ItemDaLista));
     aux->velocidade = valor.velocidade;
@@ -101,6 +79,24 @@ void inserirUltimo(Lista *lista, ItemDaLista valor){
         }
      }
      lista->quantItens++;
+}
+
+void removerPrimeiro(Lista *lista){
+   ItemDaLista *aux = lista->primeiroElemento->proxItem;
+   lista->primeiroElemento = aux;
+   lista->quantItens--;
+}
+
+void removerUltimo(Lista *lista){
+  ItemDaLista *ultimo = lista->primeiroElemento;
+  ItemDaLista *penultimo = lista;
+
+  while(ultimo->proxItem != NULL){
+	  penultimo = ultimo;
+	  ultimo = ultimo->proxItem;
+  }
+  penultimo->proxItem = NULL;
+  lista->quantItens--;
 }
 
 void mostrarLista(Lista *lista){
