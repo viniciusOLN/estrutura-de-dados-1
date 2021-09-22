@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1627265856 source:c:\users\vinic\documents\myprojects\estrutura-de-dados-1\lista-linear-simplesmente-encadeada\lista-linear-simplesmente-encadeada-2\main.c
+	<stdio.h>
+	<stdlib.h>
+

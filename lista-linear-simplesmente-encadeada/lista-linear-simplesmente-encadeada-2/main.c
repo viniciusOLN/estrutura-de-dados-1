@@ -22,7 +22,6 @@ void initLista(Lista *lista){
     lista->primeiroElemento = NULL;
 }
 
-<<<<<<< Updated upstream
 void inserirPrimeiro(Lista *lista, ItemDaLista valor){
     ItemDaLista *aux = malloc(sizeof(ItemDaLista));
     aux->velocidade = valor.velocidade;
@@ -63,18 +62,6 @@ void inserirUltimo(Lista *lista, ItemDaLista valor){
           aux->valor_multa = 190;
         else
           aux->valor_multa = temp;
-=======
-void inserirUltimo(Lista *lista, char motorista, int velocidade, int dia, int mes, int ano){
-    ItemDaLista *novo;;
-    novo = malloc(sizeof(ItemDaLista));
-
-    novo->placa = motorista;
-    novo->velocidade = velocidade;
-
-    novo->dia = dia;
-    novo->mes = mes;
-    novo->ano = ano;
->>>>>>> Stashed changes
 
     }
 
@@ -94,7 +81,6 @@ void inserirUltimo(Lista *lista, char motorista, int velocidade, int dia, int me
      lista->quantItens++;
 }
 
-<<<<<<< Updated upstream
 void removerPrimeiro(Lista *lista){
    ItemDaLista *aux = lista->primeiroElemento->proxItem;
    lista->primeiroElemento = aux;
@@ -118,29 +104,11 @@ ItemDaLista *temp = lista->primeiroElemento;
   while(temp != NULL){
     printf("placa: %d velocidade: %d data: %d/%d/%d valor da multa: %d\n0", temp->placa, temp->velocidade, temp->dia, temp->mes, temp->ano, temp->valor_multa);
     temp = temp->proxItem;
-=======
-void ler_valor(char *motorista, int *velocidade, int *dia, int *mes, int *ano){
-    printf("digite a placa: ");
-    scanf("%s", &motorista);
-    printf("digite a velocidade: ");
-    scanf("%i", &velocidade);
-    printf("digite a data(dd/mm/aa): ");
-    scanf("%i %i %i",&dia, &mes, &ano );;
-}
-
-void mostrarLista(Lista *lista){
- ItemDaLista *i = lista->primeiroDaLista;
-  while(i != NULL){
-        printf("aaaaaa");
-    printf("placa: %s  velocidade: %i \n", i->placa, i->velocidade);
-    i = i->proximoItem;
->>>>>>> Stashed changes
   }
 }
 
 int main(){
     Lista *lista;
-<<<<<<< Updated upstream
     int op = 0;
     int exit = 0;
     initLista(&lista);
@@ -198,26 +166,4 @@ int main(){
 		}
     }while(exit != 0);
     return 0;
-=======
-    char motorista[20];
-    int velocidade;
-    int dia;
-    int mes;
-    int ano;
-    //printf("velocidade maxima permitida: %i\n", v_max);
-
-
-    //ItemDaLista a;
-
-    initLista(&lista, v_max);
-    ler_valor(&motorista, &velocidade, &dia, &mes, &ano);
-    char placa[23] = "aaada";
-    dia = 10;
-    velocidade = 200;
-    mes = 12;
-    ano = 2021;
-    inserirUltimo(&lista, placa, velocidade, dia, mes, ano);
-    mostrarLista(&lista);
- return 0;
->>>>>>> Stashed changes
 }
