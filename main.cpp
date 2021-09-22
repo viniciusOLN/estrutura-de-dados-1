@@ -1,5 +1,5 @@
-#include <cstdlib>
-#include <cstdio>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct no {
 	unsigned num;
@@ -63,14 +63,12 @@ int main () {
 	raiz = init();
 	unsigned op, num;
 	
-	printf("\n Dymas Sousa e Vinicius Oliveira - Questao 04\n");
-	
 do {
 		puts("\n");
-		puts("1. Inserir numero           2. Mostrar arvore");
+		puts("1. Inserir numero        2. Mostrar arvore");
 		puts("3. Remover folhas");
 		puts("0. Sair");
-		printf("digite uma opçao: ");
+		printf("digite uma opcao: ");
 		scanf("%u", &op);
 		switch (op) {
 			case 1: {
@@ -97,12 +95,11 @@ do {
 				break;
 			}
 			default: {
-				printf("valor invalido, tente novamente!");
+				printf("opcao invalida, tente novamente!");
 				op = 4;
 			}
 		}
 	}while (op >= 1 && op <= 3);
-	
 	
 	return 0;
 } 
